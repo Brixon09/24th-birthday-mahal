@@ -74,9 +74,11 @@
 .slideshow img,
 .slideshow video {
     width: 100%;
+    object-fit: cover; /* para hindi mag-stretch ang video/image */
     border-radius: 18px;
     display: none;
 }
+
 .slideshow img.active,
 .slideshow video.active {
     display: block;
@@ -135,7 +137,6 @@
         <img src="img06.jpg">
         <img src="img07.jpg">        
         <img src="img08.jpg">
-                <img src="img09.jpg">
                 <img src="img010.jpg">
         <img src="img012.jpg">
         <img src="img013.jpg">
@@ -200,7 +201,7 @@ function updateSlides() {
 }
 
 // ========== TAP COUNTER BUTTON ==========
-const surpriseBtn = document.getElementById("surpriseBtn"); // siguraduhing may id sa button
+const surpriseBtn = document.getElementById("surpriseBtn");
 let tapCount = 0;
 const requiredTaps = 24;
 
@@ -218,10 +219,21 @@ surpriseBtn.addEventListener("click", () => {
     surpriseBtn.innerText = "💝 Surprise! 💝";
 
     // 🎆 Fireworks / Hearts
-    burstHearts(20); // puputok 20 hearts sa screen
+    burstHearts(20);
 
     // Start slideshow
     startSurprise();
+
+    // ✅ Focus sa slideshow para mas madaling makita at autoplay gumana
+    const slideshow = document.getElementById("slideshow");
+
+    // Maglagay ng tabindex kung wala pa
+    if (!slideshow.hasAttribute("tabindex")) {
+        slideshow.setAttribute("tabindex", "-1");
+    }
+
+    // Focus sa slideshow
+    slideshow.focus();
 });
 
 
